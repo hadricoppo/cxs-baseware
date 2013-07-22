@@ -3,14 +3,14 @@
 function setup_dirs {
 
 LFS=$(pwd)/cxs-baseware
-sudo mkdir -v $LFS/{dev,proc,sys}
-sudo mknod -m 600 $LFS/dev/console c 5 1
-sudo mknod -m 666 $LFS/dev/null c 1 3
-sudo mount -v --bind /dev $LFS/dev
-sudo mount -vt devpts devpts $LFS/dev/pts
-sudo mount -vt tmpfs shm $LFS/dev/shm
-sudo mount -vt proc proc $LFS/proc
-sudo mount -vt sysfs sysfs $LFS/sys
+mkdir -v $LFS/{dev,proc,sys}
+mknod -m 600 $LFS/dev/console c 5 1
+mknod -m 666 $LFS/dev/null c 1 3
+mount -v --bind /dev $LFS/dev
+mount -vt devpts devpts $LFS/dev/pts
+mount -vt tmpfs shm $LFS/dev/shm
+mount -vt proc proc $LFS/proc
+mount -vt sysfs sysfs $LFS/sys
 
 }
 
@@ -25,7 +25,7 @@ LC_ALL=POSIX
 LFS_TGT=$(uname -m)-lfs-linux-gnu
 PATH=/tools/bin:/bin:/usr/bin
 export LFS LC_ALL LFS_TGT PATH PACKAGES_DIR
-sudo chroot "$LFS" /tools/bin/env -i HOME=/root TERM="$TERM" PS1='\u:\w\$ ' PATH=/bin:/usr/bin:/sbin:/usr/sbin:/tools/bin CXS_BUILDD=1 /build.sh
+chroot "$LFS" /tools/bin/env -i HOME=/root TERM="$TERM" PS1='\u:\w\$ ' PATH=/bin:/usr/bin:/sbin:/usr/sbin:/tools/bin CXS_BUILDD=1 /build_system.sh
 
 }
 
