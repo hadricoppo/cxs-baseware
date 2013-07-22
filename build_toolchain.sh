@@ -17,7 +17,8 @@ PACKAGES_DIR=$LFS/packages/
 LC_ALL=POSIX
 LFS_TGT=$(uname -m)-lfs-linux-gnu
 PATH=/tools/bin:/bin:/usr/bin
-export LFS LC_ALL LFS_TGT PATH
+FORCE_UNSAFE_CONFIGURE=1
+export LFS LC_ALL LFS_TGT PATH FORCE_UNSAFE_CONFIGURE
 
 sudo mkdir -v $LFS/tools
 sudo ln -sv $LFS/tools /
