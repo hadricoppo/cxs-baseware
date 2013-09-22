@@ -25,14 +25,14 @@ LC_ALL=POSIX
 LFS_TGT=$(uname -m)-lfs-linux-gnu
 PATH=/tools/bin:/bin:/usr/bin
 export LFS LC_ALL LFS_TGT PATH PACKAGES_DIR
-chroot "$LFS" /tools/bin/env -i HOME=/root TERM="$TERM" PS1='\u:\w\$ ' PATH=/bin:/usr/bin:/sbin:/usr/sbin:/tools/bin CXS_BUILDD=1 /build_system.sh
+chroot "$LFS" /tools/bin/env -i HOME=/root TERM="$TERM" PS1='\u:\w\$ ' PATH=/bin:/usr/bin:/sbin:/usr/sbin:/tools/bin PACKAGES_DIR="$PACKAGES_DIR" LC_ALL="$LC_ALL" LFS_TGT="$LFS_TGT" CXS_BUILDD=1 /build_system.sh
 
 }
 
 function prepare {
 
 set +h
-
+set -e
 
 }
 
