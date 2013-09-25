@@ -1,6 +1,10 @@
 #!/bin/bash -e
 
-DSL_AR="boot.tar.gz"
+DSLCORE_ISO="packages/dslcore_20080717.iso"
+DSLCORE_MNT="/tmp/dslcore_mount"
+
+DSL_AR="${DSLCORE_MNT}/boot/dslcore.gz"
+DSL_CPIO="/tmp/dslcore"
 DSL_DIR="boot"
 IMG_FILENAME="output.img"
 INSTALLER_SYSTEM_MNT="installer_system"
@@ -24,7 +28,11 @@ mount ${INSTALLER_SYSTEM_DEV} ${INSTALLER_SYSTEM_MNT}
 #
 # Unpacking DSL + CXS + installer onto image file
 #
-tar xvf ${DSL_AR}
+mkdir ${DSLCORE_MNT}
+mount -o loop -t iso9660 ${DSLCORE_ISO} ${DSLCORE_MNT}
+gunzip -c ${DSL_AR} > ${DSL_CPIO}
+cpio -idmv < ${DSL_CPIO}
+
 cp -vr ${DSL_DIR} ${INSTALLER_SYSTEM_MNT}
 mv ${INSTALLER_SYSTEM_MNT}/${DSL_DIR}/isolinux/* ${INSTALLER_SYSTEM_MNT}
 mv ${INSTALLER_SYSTEM_MNT}/isolinux.cfg ${INSTALLER_SYSTEM_MNT}/syslinux.cfg
@@ -35,7 +43,7 @@ mv ${INSTALLER_SYSTEM_MNT}/isolinux.cfg ${INSTALLER_SYSTEM_MNT}/syslinux.cfg
 
 umount ${INSTALLER_SYSTEM_MNT}
 syslinux ${INSTALLER_SYSTEM_DEV}
-#parted ${INSTALLER_SYSTEM_DEV} set 1 boot on
+parted ${INSTALLER_SYSTEM_DEV} set 1 boot on
 
 #
 #Cleaning
